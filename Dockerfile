@@ -4,12 +4,10 @@
 
 FROM golang:alpine as builder
 EXPOSE 3000
-COPY src .
-RUN cd main && \
-CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o main .
-RUN ls && echo $PWD
-FROM scratch
-ADD ca-certificates.crt /etc/ssl/certs/
-COPY --from=builder /main/main /
-RUN ls
+COPY src /hello
+WORKDIR /hello/main
+RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o main .
+
+FROM alpine
+COPY --from=builder /hello/main/main /main
 CMD ["./main"]
