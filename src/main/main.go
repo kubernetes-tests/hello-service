@@ -17,7 +17,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 }
 
 func hello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "hello world! from version 1")
+	fmt.Fprintln(w, "hello world! from version 5arm")
 }
 
 func path(w http.ResponseWriter, r *http.Request) {
